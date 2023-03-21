@@ -12,24 +12,21 @@ app.use(cors());
 
 
 
-app.post("/chatroom", function (req, res){
-    const id = uuidv4();
-    const chatRoomRef = rtdb.ref("/chatrooms/"+id);
-    chatRoomRef.set({
-        type:"chatroom"
-    }, function (){
-        res.json({
-            id,
-        });
-    }
-    );
+app.post("/messages", function (req, res){
+    const chatRoomRef = rtdb.ref("/chatrooms/general/messages");
+    chatRoomRef.push(req.body, function() {
+        res.json("todo ok");
+    });
+
    
-});
-app.post("/messages/", function (req, res){
-    res.json(["todos los usuarios"]);
+  
+
+
+//app.post("/messages/", function (req, res){
+//    res.json(["todos los usuarios"]);
 });
 
 
 app.listen(port, ()=>{
-    console.log('Example app Listening at http://localhost:${port}');
+    console.log(`Example app Listening at http://localhost:${port}`);
 });
